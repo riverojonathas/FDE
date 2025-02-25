@@ -1,6 +1,8 @@
 'use client'
 
+import React from 'react'
 import { MainLayout } from "@/components/layout/main-layout"
+import { PageHeader } from "@/components/ui/page-header"
 import { Card } from "@/components/ui/card"
 import { 
   Clock, 
@@ -12,24 +14,26 @@ import {
   GraduationCap,
   MapPin,
   TrendingUp,
-  AlertCircle
+  AlertCircle,
+  LayoutDashboard
 } from "lucide-react"
 import { useAppStore } from "@/store/useAppStore"
 import { cn } from "@/lib/utils"
+import { LAYOUT_CONSTANTS } from "@/constants/layout"
 
 export default function DashboardPage() {
   return (
     <MainLayout>
-      <div className="space-y-8">
-        {/* Conteúdo existente, mas sem os wrappers extras */}
-        <div>
-          <h1 className="text-2xl font-medium text-slate-100">Dashboard</h1>
-          <p className="text-sm text-slate-400">Visão geral do sistema de avaliação</p>
-        </div>
+      <div className="py-6 space-y-6">
+        <PageHeader
+          title="Dashboard"
+          description="Visão geral do sistema de avaliação"
+          icon={<LayoutDashboard className="h-6 w-6" />}
+        />
 
         {/* Performance do Sistema */}
         <section className="space-y-4">
-          <h2 className="text-sm font-medium text-slate-400 flex items-center gap-2">
+          <h2 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
             Performance do Sistema
           </h2>
@@ -90,7 +94,7 @@ export default function DashboardPage() {
 
         {/* Alcance do Sistema */}
         <section className="space-y-4">
-          <h2 className="text-sm font-medium text-slate-400 flex items-center gap-2">
+          <h2 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             <Users className="h-4 w-4" />
             Alcance do Sistema
           </h2>
@@ -151,7 +155,7 @@ export default function DashboardPage() {
 
         {/* Insights */}
         <section className="space-y-4">
-          <h2 className="text-sm font-medium text-slate-400 flex items-center gap-2">
+          <h2 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
             <AlertCircle className="h-4 w-4" />
             Insights da IA
           </h2>

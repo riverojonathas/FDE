@@ -1,0 +1,8 @@
+git status 
+git add .  # Adiciona todas as alterações
+# ou
+git add caminho/do/arquivo  # Adiciona arquivo específico 
+git commit -m "Descrição breve das mudanças" 
+git push -u origin main  # Define o upstream automaticamente
+# ou
+git push origin master  # Se estiver usando branch 'master' 

@@ -13,14 +13,14 @@ export function MainLayout({ children }: MainLayoutProps) {
   const { isSidebarCollapsed } = useAppStore()
 
   return (
-    <div className="min-h-screen bg-[#0A0F1C]">
+    <div className="min-h-screen bg-background">
       <Header />
       <Sidebar />
       <div className={cn(
         "pt-14", // altura do header
         isSidebarCollapsed ? "md:pl-16" : "md:pl-64"
       )}>
-        <div className="p-6">
+        <div className="px-6">
           {children}
         </div>
       </div>

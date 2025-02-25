@@ -129,4 +129,74 @@ export async function obterTurmasDoAluno(studentId: string) {
 
   if (error) throw error;
   return data;
+}
+
+export async function fetchCidades() {
+  const { data, error } = await supabase
+    .from('cities')
+    .select('*')
+    .order('name')
+
+  if (error) throw error
+  return data
+}
+
+export async function fetchEscolas(cidadeId: string) {
+  const { data, error } = await supabase
+    .from('schools')
+    .select(`
+      id,
+      name,
+      city:cities(
+        id,
+        name,
+        state
+      )
+    `)
+    .eq('city_id', cidadeId)
+    .order('name')
+
+  if (error) throw error
+  return data
+}
+
+export async function fetchTurmas(serieId: string) {
+  const { data, error } = await supabase
+    .from('classes')
+    .select(`
+      id,
+      name,
+      period,
+      grade:grades(
+        id,
+        name,
+        education_level:education_levels(
+          id,
+          name
+        )
+      )
+    `)
+    .eq('grade_id', serieId)
+    .order('name')
+
+  if (error) throw error
+  return data
+}
+
+export async function fetchAlunos(turmaId: string) {
+  const { data, error } = await supabase
+    .from('student_class_enrollments')
+    .select(`
+      student:students(
+        id,
+        name,
+        email,
+        registration_number
+      )
+    `)
+    .eq('class_id', turmaId)
+    .order('student(name)')
+
+  if (error) throw error
+  return data?.map(d => d.student) || []
 } 

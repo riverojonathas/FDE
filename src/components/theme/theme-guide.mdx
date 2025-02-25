@@ -1,0 +1,97 @@
+# Guia de Uso do Tema
+
+Este guia explica como garantir que todos os componentes e layouts sigam corretamente o tema escolhido pelo usuário.
+
+## Princípios Básicos
+
+1. **Use as variáveis CSS do Tailwind**: Sempre use as classes que fazem referência às variáveis CSS em vez de cores fixas.
+2. **Adicione variantes dark**: Para casos específicos, use a sintaxe `dark:` do Tailwind.
+3. **Evite cores fixas**: Não use cores fixas como `text-black` ou `bg-white`.
+
+## Classes Recomendadas
+
+### Texto
+- Use `text-foreground` para texto principal (em vez de text-black)
+- Use `text-muted-foreground` para texto secundário
+- Use `text-primary-foreground` para texto sobre fundos primários
+
+### Fundos
+- Use `bg-background` para o fundo principal
+- Use `bg-card` para fundos de cartões
+- Use `bg-primary` para elementos de destaque
+- Use `bg-secondary` para elementos secundários
+- Use `bg-muted` para áreas sutis
+
+### Bordas
+- Use `border-border` para bordas padrão
+- Use `border-input` para bordas de campos de entrada
+- Use `border-primary` para bordas destacadas
+
+## Exemplo de Componente com Tema
+
+```tsx
+function ExemploCard() {
+  return (
+    <div className="bg-card text-card-foreground p-4 rounded-lg border border-border">
+      <h3 className="text-foreground font-medium">Título do Card</h3>
+      <p className="text-muted-foreground mt-2">Descrição secundária</p>
+      <div className="bg-muted p-3 rounded-md mt-4">
+        <p className="text-muted-foreground">Área destacada</p>
+      </div>
+      <div className="mt-4 flex gap-2">
+        <button className="bg-primary text-primary-foreground px-3 py-2 rounded">
+          Botão Primário
+        </button>
+        <button className="bg-secondary text-secondary-foreground px-3 py-2 rounded">
+          Botão Secundário
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+
+## Casos Especiais
+
+Para componentes que precisam de estilos específicos para cada tema:
+
+```tsx
+<div className="bg-white dark:bg-slate-900 text-black dark:text-white">
+  Conteúdo com estilos específicos para cada tema
+</div>
+```
+
+## Verificando o Tema Atual
+
+Se precisar verificar programaticamente o tema atual:
+
+```tsx
+'use client'
+
+import { useTheme } from 'next-themes'
+
+export function ComponenteComTema() {
+  const { theme } = useTheme()
+  
+  return (
+    <div>
+      <p>Tema atual: {theme}</p>
+      {/* Lógica condicional baseada no tema */}
+      {theme === 'dark' ? (
+        <p>Conteúdo específico para tema escuro</p>
+      ) : (
+        <p>Conteúdo específico para tema claro</p>
+      )}
+    </div>
+  )
+}
+```
+
+## Dicas Importantes
+
+1. **Teste ambos os temas**: Sempre verifique como seu componente aparece em ambos os temas.
+2. **Contraste adequado**: Garanta que o texto tenha contraste suficiente com o fundo em ambos os temas.
+3. **Consistência**: Mantenha a consistência visual entre os temas.
+4. **Acessibilidade**: Certifique-se de que seu design é acessível em ambos os temas.
+
+Seguindo estas diretrizes, todos os componentes responderão corretamente ao tema escolhido pelo usuário. 

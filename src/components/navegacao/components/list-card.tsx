@@ -1,4 +1,4 @@
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { ItemHierarquico } from "@/types/navigation";
 import { cn } from "@/lib/utils";
 
@@ -9,10 +9,6 @@ interface ListCardProps {
 }
 
 export function ListCard({ item, selected, onSelect }: ListCardProps) {
-  if (!item) {
-    return null;
-  }
-
   return (
     <div
       className={cn(
@@ -22,8 +18,10 @@ export function ListCard({ item, selected, onSelect }: ListCardProps) {
       onClick={onSelect}
     >
       <div className="space-y-2">
-        <div className="font-medium">{item.nome}</div>
-        <div className="text-sm text-muted-foreground">{item.descricao}</div>
+        <div className="font-medium text-slate-100">{item.nome}</div>
+        {item.descricao && (
+          <div className="text-sm text-slate-400">{item.descricao}</div>
+        )}
       </div>
     </div>
   );

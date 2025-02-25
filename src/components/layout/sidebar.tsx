@@ -48,18 +48,18 @@ export function Sidebar() {
 
   return (
     <aside className={cn(
-      "fixed top-14 left-0 h-[calc(100vh-3.5rem)] border-r border-slate-800 bg-[#0A0F1C] transition-all duration-300 hidden md:block",
+      "fixed top-14 left-0 h-[calc(100vh-3.5rem)] border-r border-border bg-background transition-all duration-300 hidden md:block",
       isSidebarCollapsed ? "w-16" : "w-64"
     )}>
       {/* Botão de Toggle */}
       <button
         onClick={toggleSidebar}
-        className="absolute -right-3 top-6 p-1 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors"
+        className="absolute -right-3 top-6 p-1 bg-muted hover:bg-muted/80 rounded-full transition-colors"
       >
         {isSidebarCollapsed ? (
-          <ChevronRight className="h-4 w-4 text-slate-400" />
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
         ) : (
-          <ChevronLeft className="h-4 w-4 text-slate-400" />
+          <ChevronLeft className="h-4 w-4 text-muted-foreground" />
         )}
       </button>
 
@@ -73,8 +73,8 @@ export function Sidebar() {
               "flex items-center gap-3 rounded-lg transition-colors",
               isSidebarCollapsed ? "px-2 py-2.5" : "px-4 py-2.5",
               pathname === route.href 
-                ? "bg-blue-500/10 text-blue-400" 
-                : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/50"
+                ? "bg-primary/10 text-primary" 
+                : "text-muted-foreground hover:text-foreground hover:bg-accent"
             )}
             title={isSidebarCollapsed ? route.label : undefined}
           >
@@ -85,19 +85,19 @@ export function Sidebar() {
       </nav>
 
       {/* Info do Protótipo */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-800">
+      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border">
         <div className={cn(
           "flex flex-col",
           isSidebarCollapsed && "items-center"
         )}>
           <div className="flex items-center gap-2">
             {!isSidebarCollapsed && (
-              <span className="text-[10px] text-slate-400 tracking-wider">PROTÓTIPO</span>
+              <span className="text-[10px] text-muted-foreground tracking-wider">PROTÓTIPO</span>
             )}
-            <span className="text-[10px] text-emerald-400 tracking-wider">v1.0</span>
+            <span className="text-[10px] !text-emerald-500 font-semibold tracking-wider">v1.0</span>
           </div>
           {!isSidebarCollapsed && (
-            <span className="text-[10px] text-slate-500 tracking-wider">TIME DE TECNOLOGIA FDE</span>
+            <span className="text-[10px] text-muted-foreground/60 tracking-wider">TIME DE TECNOLOGIA FDE</span>
           )}
         </div>
       </div>

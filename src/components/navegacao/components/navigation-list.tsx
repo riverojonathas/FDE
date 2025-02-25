@@ -4,12 +4,21 @@ import { supabase } from '@/lib/supabase';
 import { ListCard } from './list-card';
 import { NavigationLevel, NavigationState, BaseItem } from '@/types/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ItemTipo } from './navegacao-hierarquica';
 
 interface NavigationListProps {
-  level: NavigationLevel;
-  state: NavigationState;
+  level: ItemTipo;
+  viewType: 'grid' | 'list' | 'table';
   searchTerm: string;
-  onSelect: (item: BaseItem) => void;
+  selectedItems: {
+    cidade: { id: string; nome: string; descricao?: string } | null;
+    escola: { id: string; nome: string; descricao?: string } | null;
+    'tipo-ensino': { id: string; nome: string; descricao?: string } | null;
+    serie: { id: string; nome: string; descricao?: string } | null;
+    turma: { id: string; nome: string; descricao?: string } | null;
+    aluno: { id: string; nome: string; descricao?: string } | null;
+  };
+  onSelect: (item: { id: string; nome: string; descricao?: string }) => void;
 }
 
 const getTableName = (level: NavigationLevel): string => {
@@ -76,13 +85,19 @@ const getIcon = (level: NavigationLevel) => {
   return icons[level];
 };
 
-export function NavigationList({ level, state, searchTerm, onSelect }: NavigationListProps) {
+export function NavigationList({
+  level,
+  viewType,
+  searchTerm,
+  selectedItems,
+  onSelect
+}: NavigationListProps) {
   const [items, setItems] = useState<BaseItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadItems();
-  }, [level, state]);
+  }, [level, selectedItems]);
 
   async function loadItems() {
     setLoading(true);
@@ -96,7 +111,7 @@ export function NavigationList({ level, state, searchTerm, onSelect }: Navigatio
               name
             )
           `)
-          .eq('education_level_id', state.escola?.id);
+          .eq('education_level_id', selectedItems.escola?.id);
 
         if (error) throw error;
 
@@ -116,7 +131,7 @@ export function NavigationList({ level, state, searchTerm, onSelect }: Navigatio
         const { data, error } = await supabase
           .from(getTableName(level))
           .select(getSelectQuery(level))
-          .match(getFilters(level, state));
+          .match(getFilters(level, selectedItems));
 
         if (error) throw error;
         setItems(data);
@@ -150,7 +165,7 @@ export function NavigationList({ level, state, searchTerm, onSelect }: Navigatio
           title={item.name}
           description={getItemDescription(item, level)}
           icon={getIcon(level)}
-          selected={state[level]?.id === item.id}
+          selected={selectedItems[level]?.id === item.id}
           onClick={() => onSelect(item)}
         />
       ))}

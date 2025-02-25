@@ -25,6 +25,19 @@ interface CSVData {
   resposta: string
 }
 
+interface BatchResponse {
+  student_id: string;
+  question_id: string;
+  answer: string;
+}
+
+interface BatchCorrectionResult {
+  success: boolean;
+  studentId: string;
+  questionId: string;
+  correctionId?: string;
+}
+
 export function BatchCorrection() {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
@@ -98,7 +111,7 @@ export function BatchCorrection() {
         }
       }
 
-      const respostasPorQuestao = validRows.reduce((acc, row) => {
+      const respostasPorQuestao = validRows.reduce<Record<string, BatchResponse[]>>((acc, row) => {
         const questao = questions.find(q => q.code === row.codigo_questao)
         const studentId = students[row.email]
 
@@ -107,7 +120,7 @@ export function BatchCorrection() {
             acc[questao.id] = []
           }
           acc[questao.id].push({
-            student_id: studentId, // Agora usando o UUID do aluno
+            student_id: studentId,
             question_id: questao.id,
             answer: row.resposta.trim()
           })
@@ -122,25 +135,21 @@ export function BatchCorrection() {
           })
         }
         return acc
-      }, {} as Record<string, Array<{
-        student_id: string
-        question_id: string
-        answer: string
-      }>>)
+      }, {})
 
       let totalProcessado = 0
       let totalSucesso = 0
       let totalErro = 0
 
       for (const [questionId, respostas] of Object.entries(respostasPorQuestao)) {
-        const results = await addBatchCorrections(respostas)
+        const results = await addBatchCorrections(respostas) as BatchCorrectionResult[]
         
         const sucessos = results.filter(r => r.success).length
         totalSucesso += sucessos
         totalErro += results.length - sucessos
 
         totalProcessado += respostas.length
-        const progressoAtual = Math.round((totalProcessado / data.length) * 100)
+        const progressoAtual = Math.round((totalProcessado / validRows.length) * 100)
         setProgress(progressoAtual)
 
         if (sucessos > 0) {

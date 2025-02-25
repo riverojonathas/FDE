@@ -12,7 +12,7 @@ export interface ItemHierarquico {
   id: string;
   nome: string;
   tipo: ItemTipo;
-  descricao: string;
+  descricao?: string;
 }
 
 export interface ItemSelecionado {
@@ -22,7 +22,14 @@ export interface ItemSelecionado {
 }
 
 // Estado da navegação
-export type NavigationState = Record<ItemTipo, ItemSelecionado | null>;
+export interface NavigationState {
+  cidade: ItemHierarquico | null;
+  escola: ItemHierarquico | null;
+  'tipo-ensino': ItemHierarquico | null;
+  serie: ItemHierarquico | null;
+  turma: ItemHierarquico | null;
+  aluno: ItemHierarquico | null;
+}
 
 // Interfaces de dados
 export interface City extends BaseItem {
