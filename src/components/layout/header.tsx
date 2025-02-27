@@ -65,26 +65,6 @@ export function Header() {
         {/* Configurações (lado direito) */}
         <div className="ml-auto flex items-center gap-4">
           <ThemeToggle />
-          <Button 
-            variant="ghost" 
-            size="sm"
-            asChild
-          >
-            <Link href="/api">
-              <Code className="h-4 w-4 mr-2" />
-              API
-            </Link>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            asChild
-          >
-            <Link href="/settings">
-              <Settings className="h-4 w-4 mr-2" />
-              Configurações
-            </Link>
-          </Button>
         </div>
       </div>
     </header>

@@ -11,8 +11,10 @@ import {
   Upload,
   Search,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Bot
 } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 const routes = [
   {
@@ -20,31 +22,54 @@ const routes = [
     icon: LayoutDashboard,
     href: '/dashboard',
   },
-  {
-    label: 'Navegação',
-    icon: Search,
-    href: '/navegacao',
-  },
+  // Removendo a opção de navegação do sidebar
+  // {
+  //   label: 'Navegação',
+  //   icon: Search,
+  //   href: '/navegacao',
+  // },
   {
     label: 'Questões',
     icon: FileText,
     href: '/questions',
   },
+  // Removendo a opção de navegação do sidebar
+  // {
+  //   label: 'Respostas',
+  //   icon: MessageSquare,
+  //   href: '/respostas',
+  // },
+  // Removendo a opção de navegação do sidebar
+  // {
+  //   label: 'Correção em Lote',
+  //   icon: Upload,
+  //   href: '/batch-correction',
+  // },
   {
-    label: 'Respostas',
-    icon: MessageSquare,
-    href: '/respostas',
-  },
-  {
-    label: 'Correção em Lote',
-    icon: Upload,
-    href: '/batch-correction',
+    label: 'Corretor 2.0',
+    icon: Bot,
+    href: '/dashboard/manual-pipeline',
   }
 ]
 
 export function Sidebar() {
   const pathname = usePathname()
   const { isSidebarCollapsed, toggleSidebar } = useAppStore()
+
+  const generateFullPrompt = (step: IPipelineStep) => {
+    // Inclui:
+    // - Texto a ser analisado
+    // - Análises anteriores
+    // - Instruções do step atual
+    // - Formato esperado da resposta
+  }
+
+  const getExpectedFormat = (step: IPipelineStep) => {
+    // Retorna o formato JSON esperado para cada tipo de step:
+    // - step-1: Análise Inicial (pontos principais, argumentos, ideias)
+    // - step-2: Avaliação Técnica (estrutura, coesão, coerência)
+    // - step-3: Feedback Final (feedback geral, pontos fortes/fracos, sugestões)
+  }
 
   return (
     <aside className={cn(
